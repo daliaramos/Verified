@@ -11,9 +11,5 @@ export class User extends BaseEntity {
 	name!: string;
 	
 	@Property()
-	petType!: string;
-	
-	@Property()
-	isMatched: boolean = false;
-
+	occupation!: string;
 }

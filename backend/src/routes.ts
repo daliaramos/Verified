@@ -15,37 +15,16 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 		return request.em.find(User, {});
 	});
 	
-
-	
-	// Core method for adding generic SEARCH http method
-	// app.route<{Body: { email: string}}>({
-	// 	method: "SEARCH",
-	// 	url: "/users",
-	//
-	// 	handler: async(req, reply) => {
-	// 		const { email } = req.body;
-	//
-	// 		try {
-	// 			const theUser = await req.em.findOne(User, { email });
-	// 			console.log(theUser);
-	// 			reply.send(theUser);
-	// 		} catch (err) {
-	// 			console.error(err);
-	// 			reply.status(500).send(err);
-	// 		}
-	// 	}
-	// });
 	
 	// CRUD
-	// C
 	app.post<{Body: ICreateUsersBody}>("/users", async (req, reply) => {
-		const { name, email, petType} = req.body;
+		const { name, email, occupation} = req.body;
 		
 		try {
 			const newUser = await req.em.create(User, {
 				name,
 				email,
-				petType
+				occupation
 			});
 
 			await req.em.flush();
@@ -74,11 +53,11 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 	
 	// UPDATE
 	app.put<{Body: ICreateUsersBody}>("/users", async(req, reply) => {
-		const { name, email, petType} = req.body;
+		const { name, email, occupation} = req.body;
 		
 		const userToChange = await req.em.findOne(User, {email});
 		userToChange.name = name;
-		userToChange.petType = petType;
+		userToChange.occupation = occupation;
 		
 		// Reminder -- this is how we persist our JS object changes to the database itself
 		await req.em.flush();
